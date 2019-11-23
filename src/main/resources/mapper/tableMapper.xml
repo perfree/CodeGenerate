@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.perfree.mapper.TableMapper">
+
+    <select id="queryAllTable" resultType="com.perfree.module.Table">
+        select t.table_name,t.comments table_comments from user_tab_comments t
+    </select>
+
+    <select id="queryFieldForTable" resultType="com.perfree.module.TableField" parameterType="String">
+        SELECT t.TABLE_NAME,
+               t.COLUMN_NAME,
+               t.DATA_TYPE,
+               t.DATA_LENGTH,
+               t.NULLABLE,
+               t1.comments
+        FROM user_tab_columns t
+                 left join user_col_comments t1
+                           on t.COLUMN_NAME = t1.column_name
+                               and t.TABLE_NAME = t1.table_name
+        where t.table_name = upper(#{table_name})
+    </select>
+</mapper>
