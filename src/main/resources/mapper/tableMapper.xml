@@ -3,16 +3,16 @@
 <mapper namespace="com.perfree.mapper.TableMapper">
 
     <select id="queryAllTable" resultType="com.perfree.module.Table">
-        select t.table_name,t.comments table_comments from user_tab_comments t
+        select t.table_name tableName,t.comments tableComments from user_tab_comments t
     </select>
 
     <select id="queryFieldForTable" resultType="com.perfree.module.TableField" parameterType="String">
-        SELECT t.TABLE_NAME,
-               t.COLUMN_NAME,
-               t.DATA_TYPE,
-               t.DATA_LENGTH,
-               t.NULLABLE,
-               t1.comments
+        SELECT t.TABLE_NAME tableName,
+               t.COLUMN_NAME fieldName,
+               t.DATA_TYPE fieldType,
+               t.DATA_LENGTH fieldLength,
+               t.NULLABLE fieldNullable,
+               t1.comments fieldComments
         FROM user_tab_columns t
                  left join user_col_comments t1
                            on t.COLUMN_NAME = t1.column_name

@@ -1,22 +1,39 @@
 package com.perfree.module;
 
+import java.util.List;
+
+/**
+ * 表
+ */
 public class Table {
-    private String table_name;
-    private String table_comments;
+    // 表名
+    private String tableName;
+    // 表注释
+    private String tableComments;
+    // 表字段
+    private List<TableField> tableFields;
 
-    public String getTable_name() {
-        return table_name;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setTable_name(String table_name) {
-        this.table_name = table_name;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
-    public String getTable_comments() {
-        return table_comments;
+    public String getTableComments() {
+        return tableComments;
     }
 
-    public void setTable_comments(String table_comments) {
-        this.table_comments = table_comments;
+    public void setTableComments(String tableComments) {
+        this.tableComments = tableComments;
+    }
+
+    public List<TableField> getTableFields() {
+        return tableFields;
+    }
+
+    public void setTableFields(List<TableField> tableFields) {
+        this.tableFields = tableFields;
     }
 }

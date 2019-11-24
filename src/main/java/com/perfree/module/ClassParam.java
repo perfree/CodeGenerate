@@ -1,21 +1,21 @@
-package com.perfree.generate;
+package com.perfree.module;
 
-import java.util.List;
+import java.util.Date;
 
 /**
- * module类
+ * 类参数
  */
-public class ModuleClass {
+public class ClassParam {
     // 所属包名
     private String packageName;
     // 类名
     private String className;
-    // 类注释
-    private String comment;
+    // 类描述
+    private String description;
     // 作者
     private String author;
-    // 字段的集合
-    private List<ModuleField> fieldList;
+    // 创建时间
+    private Date createTime;
 
     public String getPackageName() {
         return packageName;
@@ -33,12 +33,12 @@ public class ModuleClass {
         this.className = className;
     }
 
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getAuthor() {
@@ -49,11 +49,7 @@ public class ModuleClass {
         this.author = author;
     }
 
-    public List<ModuleField> getFieldList() {
-        return fieldList;
-    }
-
-    public void setFieldList(List<ModuleField> fieldList) {
-        this.fieldList = fieldList;
+    public Date getCreateTime() {
+        return new Date();
     }
 }

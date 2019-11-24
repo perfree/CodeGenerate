@@ -1,58 +1,88 @@
 package com.perfree.module;
 
+import com.perfree.common.DbTypeToJavaTyoeUtils;
+import com.perfree.common.StringUtils;
+
+/**
+ * 表字段
+ */
 public class TableField {
-    private String table_name;
-    private String column_name;
-    private String data_type;
-    private String data_length;
-    private String nullable;
-    private String comments;
+    // 表名
+    private String tableName;
+    // 字段名
+    private String fieldName;
+    // 字段类型
+    private String  fieldType;
+    // 字段长度
+    private String  fieldLength;
+    // 字段是否可为空
+    private String  fieldNullable;
+    // 字段注释
+    private String  fieldComments;
+    // 字段对应的java类型
+    private String  fieldJavaType;
+    // 字段名首字母大写
+    private String  fieldNameUpperFirstLetter;
+    // 字段名首字母小写
+    private String  fieldNameLowerFirstLetter;
 
-    public String getComments() {
-        return comments;
+    public String getFieldJavaType() {
+        return DbTypeToJavaTyoeUtils.getJavaType(this.fieldType);
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public String getFieldNameLowerFirstLetter() {
+        return StringUtils.strLowerFirst(this.fieldName);
     }
 
-    public String getTable_name() {
-        return table_name;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setTable_name(String table_name) {
-        this.table_name = table_name;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
-    public String getColumn_name() {
-        return column_name;
+    public String getFieldName() {
+        return fieldName;
     }
 
-    public void setColumn_name(String column_name) {
-        this.column_name = column_name;
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public String getData_type() {
-        return data_type;
+    public String getFieldType() {
+        return fieldType;
     }
 
-    public void setData_type(String data_type) {
-        this.data_type = data_type;
+    public void setFieldType(String fieldType) {
+        this.fieldType = fieldType;
     }
 
-    public String getData_length() {
-        return data_length;
+    public String getFieldLength() {
+        return fieldLength;
     }
 
-    public void setData_length(String data_length) {
-        this.data_length = data_length;
+    public void setFieldLength(String fieldLength) {
+        this.fieldLength = fieldLength;
     }
 
-    public String getNullable() {
-        return nullable;
+    public String getFieldNullable() {
+        return fieldNullable;
     }
 
-    public void setNullable(String nullable) {
-        this.nullable = nullable;
+    public void setFieldNullable(String fieldNullable) {
+        this.fieldNullable = fieldNullable;
+    }
+
+    public String getFieldComments() {
+        return StringUtils.replaceWrap(this.fieldComments);
+    }
+
+    public void setFieldComments(String fieldComments) {
+        this.fieldComments = fieldComments;
+    }
+
+    public String getFieldNameUpperFirstLetter() {
+        return StringUtils.strUpperFirst(this.fieldName);
     }
 }

@@ -1,23 +1,23 @@
-package ${param.packageName};
+package ${classParam.packageName};
 
 /**
- * ${param.comment}
- * @author ${param.author}
+ * ${classParam.description}
+ * @author ${classParam.author}
  */
-public class ${param.className} {
+public class ${classParam.className} {
 
-<#list param.fieldList as field>
-    //${field.fieldRemarks}
-    private ${field.fieldType} ${field.fieldName};
+<#list table.tableFields as field>
+    //${field.fieldComments}
+    private ${field.fieldJavaType} ${field.fieldNameLowerFirstLetter};
 </#list>
 
-<#list param.fieldList as field>
-    public ${field.fieldType} get${field.fieldNameUpperFirstLetter}() {
-        return ${field.fieldName};
+<#list table.tableFields as field>
+    public ${field.fieldJavaType} get${field.fieldNameUpperFirstLetter}() {
+        return ${field.fieldNameLowerFirstLetter};
     }
 
-    public void set${field.fieldNameUpperFirstLetter}(${field.fieldType} ${field.fieldName}) {
-        this.${field.fieldName} = ${field.fieldName};
+    public void set${field.fieldNameUpperFirstLetter}(${field.fieldJavaType} ${field.fieldNameLowerFirstLetter}) {
+        this.${field.fieldNameLowerFirstLetter} = ${field.fieldNameLowerFirstLetter};
     }
 </#list>
 }
