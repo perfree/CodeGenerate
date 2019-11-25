@@ -13,7 +13,7 @@ public class ${classParam.className} {
 
 <#-- 字段 -->
 <#list table.tableFields as field>
-    //${field.fieldComments}
+    // ${field.fieldComments}
     private ${field.fieldJavaType} ${field.fieldNameLowerFirstLetter};
 
 </#list>
