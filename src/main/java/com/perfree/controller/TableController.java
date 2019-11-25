@@ -1,6 +1,6 @@
 package com.perfree.controller;
 
-import com.perfree.common.ClassGeneratorUtil;
+import com.perfree.common.GeneratorUtils;
 import com.perfree.common.StringUtils;
 import com.perfree.module.ClassParam;
 import com.perfree.module.ProjectParam;
@@ -41,7 +41,7 @@ public class TableController {
             String packagePath = StringUtils.packageNametoDirStr(classParam.getPackageName());
             // 验证目录是否存在
             String codeOutPath = "E:/" + packagePath;
-            ClassGeneratorUtil.generatorCode(projectParam, classParam, table, "templates/test", "module.ftl", ".java", codeOutPath);
+            GeneratorUtils.generatorCode(projectParam, classParam, table, "templates/test", "module.ftl", ".java", codeOutPath);
         }
     }
 }

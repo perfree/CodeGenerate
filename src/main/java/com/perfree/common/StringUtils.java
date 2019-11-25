@@ -58,7 +58,7 @@ public class StringUtils {
         String[] split = packageStr.split("\\.");
         StringBuilder packageName = new StringBuilder();
         for (String packageSplit : split) {
-            packageName.append(packageSplit).append(ClassGeneratorUtil.SEPARATOR);
+            packageName.append(packageSplit).append(GeneratorUtils.SEPARATOR);
         }
         return packageName.toString();
     }

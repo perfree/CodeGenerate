@@ -1,6 +1,7 @@
 package com.perfree.module;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 类参数
@@ -16,6 +17,16 @@ public class ClassParam {
     private String author;
     // 创建时间
     private Date createTime;
+    // 要导的包
+    private List<String> packages;
+
+    public List<String> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<String> packages) {
+        this.packages = packages;
+    }
 
     public String getPackageName() {
         return packageName;

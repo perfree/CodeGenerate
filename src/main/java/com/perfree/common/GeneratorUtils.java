@@ -16,9 +16,9 @@ import java.util.Map;
 /**
  * 生成器
  */
-public class ClassGeneratorUtil {
+public class GeneratorUtils {
 
-    private final static Logger logger = LoggerFactory.getLogger(ClassGeneratorUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(GeneratorUtils.class);
     /**
      * 文件分割符
      */
@@ -41,10 +41,11 @@ public class ClassGeneratorUtil {
         try {
             // 准备工作
             classParam.setClassName(StringUtils.strUpperFirst(table.getTableName()));
+            classParam.setPackages(GeneratorImportPackageUtils.getImportPackage(table.getTableFields()));
 
             Configuration configuration = new Configuration(Configuration.getVersion());
             configuration.setClassicCompatible(true);
-            URL uri = ClassGeneratorUtil.class.getClassLoader().getResource(templateDirectory);
+            URL uri = GeneratorUtils.class.getClassLoader().getResource(templateDirectory);
             if (uri == null) {
                 logger.error(templateDirectory + "模板不存在!");
                 return;

@@ -27,7 +27,7 @@ public class TableField {
     private String  fieldNameLowerFirstLetter;
 
     public String getFieldJavaType() {
-        return DbTypeToJavaTyoeUtils.getJavaType(this.fieldType);
+        return DbTypeToJavaTyoeUtils.getJavaType(this.fieldType, this.fieldLength);
     }
 
     public String getFieldNameLowerFirstLetter() {
