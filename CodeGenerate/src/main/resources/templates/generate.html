@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>代码生成</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/css/main.css}" media="all">
+</head>
+<style>
+    .layui-form-label{
+        width: 120px;
+    }
+    .layui-container{
+        padding: 15px 15px;
+    }
+    .layui-input-block{
+        margin-left: 150px;
+    }
+</style>
+<body>
+<div class="layui-container" style="width: 100%;">
+    <form class="layui-form" action="">
+        <div class="layui-form-item" id="projectName">
+            <label class="layui-form-label">项目名</label>
+            <div class="layui-input-block">
+                <input type="text" name="projectName" required  lay-verify="required" placeholder="请输入生成代码的项目名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目版本</label>
+            <div class="layui-input-block">
+                <input type="text" name="projecVersion" required  lay-verify="required" placeholder="请输入生成代码的项目版本" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">作者名</label>
+            <div class="layui-input-block">
+                <input type="text" name="author" required  lay-verify="required" placeholder="请输入生成代码的作者名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">基础包名</label>
+            <div class="layui-input-block">
+                <input type="text" name="basePackage" required  lay-verify="required" placeholder="请输入基础包名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">模板选择</label>
+            <div class="layui-input-block">
+                <select name="template" lay-verify="required" lay-filter="template">
+                    <option value=""></option>
+                    <option th:each="template : ${templates}" th:text="${template.name}" th:value="${template.path}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item" id="formButtons">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即生成</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        // 获取所有表
+        $.get('/codeGenerate/getTables',function (data) {
+            if(data.code === 200){
+                var html = '<div class="layui-form-item" id="tables">' +
+                    '            <label class="layui-form-label">选择要生成的表</label>' +
+                    '            <div class="layui-input-block" >';
+                for (var i= 0;i<data.data.length;i++){
+                    html += '<input type="checkbox" name="table" data-name="' + data.data[i].tableName + '" title="' + data.data[i].tableName + '" lay-skin="primary">'
+                }
+                html += '</div></div>';
+                $("#tables").remove();
+                $("#projectName").prepend(html);
+                form.render()
+            }else{
+                layer.msg(data.msg, {icon: 2});
+            }
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            var generateTable = [];
+            if($('input[name=table]').length <= 0){
+                layer.msg("请配置数据源", {icon: 2});
+                return false;
+            }
+            $('input[name=table]:checked').each(function() {
+                generateTable.push($(this).attr("data-name"));
+            });
+            if(generateTable.length <= 0){
+                layer.msg("请选择要生成的表", {icon: 2});
+                return false;
+            }
+            var generateModel = [];
+            $('input[name=model]:checked').each(function() {
+                generateModel.push($(this).attr("data-name"));
+            });
+            if(generateModel.length <= 0){
+                layer.msg("请选择要生成的模块", {icon: 2});
+                return false;
+            }
+            var param = {
+                generateTable: generateTable,
+                projectName: data.field.projectName,
+                projecVersion: data.field.projecVersion,
+                author: data.field.author,
+                basePackage: data.field.basePackage,
+                template: data.field.template,
+                generateModel: generateModel
+            };
+            var index = layer.load();
+            $.ajax({
+                url: '/codeGenerate/generate',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(param),
+                async : false,
+                contentType:"application/json",
+                success: function(res){
+                    layer.close(index);
+                    if(res.code == 200){
+                        window.location.href="/codeGenerate/download?fileName="+res.data;
+                    }else{
+                        console.log(res.msg);
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                }
+            });
+            return false;
+        });
+        // 监听选择模板事件
+        form.on('select(template)', function(data){
+            console.log(data.value); //得到被选中的值getModel
+            $.ajax({
+                url: '/codeGenerate/getModel',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify({template:data.value}),
+                async : false,
+                contentType:"application/json",
+                success: function(res){
+                    if (res.code === 200){
+                        var html = '  <div class="layui-form-item">' +
+                            '            <label class="layui-form-label">选择要生成的模块</label>' +
+                            '            <div class="layui-input-block">';
+                        for(var i = 0; i< res.data.length;i++){
+                            html+= '<input type="checkbox" data-name="' + res.data[i].modelPath + '" name="model" title="' + res.data[i].modelName + '" lay-skin="primary" lay-verify="required">';
+                        }
+                        html += '</div></div>';
+                        $("#formButtons").prepend(html)
+                    } else {
+
+                    }
+                }
+            });
+            form.render()
+        });
+    });
+</script>
+</body>
+</html>

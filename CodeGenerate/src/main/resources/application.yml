@@ -1,0 +1,35 @@
+# 生成的代码目录
+generateCodeTempPath: E:/generateCode/
+# 模板目录
+generateTemplatesPath: E:/java/CodeGenerate/templates/
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  banner:
+    charset: UTF-8
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    password: 123456
+    url: jdbc:oracle:thin:@153.153.234.249:1521:orcl
+    username: TY_WS
+  devtools:
+    add-properties: true
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  messages:
+    encoding: UTF-8
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html

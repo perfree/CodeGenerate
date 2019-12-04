@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>代码生成</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/css/main.css}" media="all">
+</head>
+<style>
+    .layui-form-label{
+        width: 120px;
+    }
+    .layui-container{
+        padding: 15px 15px;
+    }
+    .layui-input-block{
+        margin-left: 150px;
+    }
+</style>
+<body>
+<div class="layui-container" style="width: 100%;">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">连接Oracle数据库</li>
+            <li>上传PDM数据设计文件</li>
+            <li>连接Mysql数据库</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据库ip地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ip" required  lay-verify="required" placeholder="请输入数据库ip地址" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据库端口</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="port" required  lay-verify="required" placeholder="请输入数据库端口" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据库连接名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sid" required  lay-verify="required" placeholder="请输入数据库连接名,如orcl" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据库用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="userName" required  lay-verify="required" placeholder="请输入数据库用户名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">数据库密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="password" required  lay-verify="required" placeholder="请输入数据库密码" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item" id="formButtons">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="oracle">提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+                开发中...
+            </div>
+            <div class="layui-tab-item">开发中...</div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+    layui.use(['element','form','upload'], function(){
+        var form = layui.form,upload = layui.upload;
+        var element = layui.element;
+        form.on('submit(oracle)', function(data){
+            console.log(data.field)
+            var param = {
+                type: "oracle",
+                ip: data.field.ip,
+                port: data.field.port,
+                sid: data.field.sid,
+                userName: data.field.userName,
+                password: data.field.password
+            };
+            $.ajax({
+                url: '/datasource/setDataSource',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify(param),
+                async : false,
+                contentType:"application/json",
+                success: function(res){
+                    if(res.code === 200){
+                        layer.msg(res.msg, {icon: 1});
+                    }else{
+                        layer.msg(res.msg, {icon: 1});
+                    }
+                }
+            });
+            return false;
+        });
+
+
+        //拖拽上传
+        upload.render({
+            elem: '#pdmUpload'
+            ,url: '/upload/'
+            ,accept: '.pdm'
+            ,done: function(res){
+                console.log(res)
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# ${tableName} 表名称
+# ${tableNameUpperFirstLetter} 表名称首字母大写
+# ${tableNameLowerFirstLetter} 表名称首字母大写
+# ${basePackageName} 基础包名
+# ${basePackagePath} 基础包路径
+
+template:
+  name: 实体类生成示例模板
+# 输出路径
+model:
+  modelName: 实体类
+  outpath: src/main/java/${basePackagePath}/model
+  package:  ${basePackageName}.model
+  className: ${tableNameUpperFirstLetter}
+  fileName: ${tableNameUpperFirstLetter}.java

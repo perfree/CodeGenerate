@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>菜单模板</title>
+</head>
+<body>
+	<div class="perfree-menu" th:fragment="menu">
+		<!-- menu start 菜单部分开始 -->
+		<div class="layui-side layui-bg-black left-navbar-menu">
+			<div class="layui-side-scroll">
+				<div class="layui-logo">
+					<a href="#" class="logo-text">
+						<i class="fa fa-pagelines" style="font-size: 20px;"></i>
+						<span class='logo-text-value'>代码生成平台</span>
+					</a>
+				</div>
+				<ul class="layui-nav layui-nav-tree left-menu" lay-filter="menu" lay-shrink="all">
+					<!-- 菜单列表 -->
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" onclick="openTab('book','数据源','/datasource','1');">
+							<i class="fa fa-home" style="font-size: 16px;"></i>&nbsp;&nbsp;<span class="menu-text">数据源</span>
+						</a>
+					</li>
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" onclick="openTab('book','代码生成','/codeGenerate','2');">
+							<i class="fa fa-book" style="font-size: 16px;"></i>&nbsp;&nbsp;<span class="menu-text">代码生成</span>
+						</a>
+					</li>
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" onclick="openTab('book','模板管理','/template','3');">
+							<i class="fa fa-book" style="font-size: 16px;"></i>&nbsp;&nbsp;<span class="menu-text">模板管理</span>
+						</a>
+					</li>
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" onclick="openTab('book','模板开发文档','/template','4');">
+							<i class="fa fa-book" style="font-size: 16px;"></i>&nbsp;&nbsp;<span class="menu-text">模板开发文档</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- menu end 菜单部分结束 -->
+	</div>
+</body>
+</html>
