@@ -21,6 +21,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +81,12 @@ public class TemplateController {
     public ResponseBean upload(@RequestParam(value = "file", required = false) MultipartFile file){
         if (!file.isEmpty()) {
             try {
+                File templatePathFile = new File(generateTemplatesPath);
+                if (!templatePathFile.exists()){
+                    templatePathFile.mkdirs();
+                }
                 BufferedOutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(new File(generateTemplatesPath, Objects.requireNonNull(file.getOriginalFilename()))));
+                        Files.newOutputStream(new File(generateTemplatesPath, Objects.requireNonNull(file.getOriginalFilename())).toPath()));
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
